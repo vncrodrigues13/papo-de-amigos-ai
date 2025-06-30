@@ -1,14 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import ConfigurationScreen from '@/components/ConfigurationScreen';
+import QuestionDisplay from '@/components/QuestionDisplay';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const [isConfigured, setIsConfigured] = useState(false);
+  const [interests, setInterests] = useState('');
+  const [context, setContext] = useState('');
+
+  const handleStart = (userInterests: string, userContext: string) => {
+    setInterests(userInterests);
+    setContext(userContext);
+    setIsConfigured(true);
+  };
+
+  const handleReconfigure = () => {
+    setIsConfigured(false);
+  };
+
+  if (isConfigured) {
+    return (
+      <QuestionDisplay
+        interests={interests}
+        context={context}
+        onReconfigure={handleReconfigure}
+      />
+    );
+  }
+
+  return <ConfigurationScreen onStart={handleStart} />;
 };
 
 export default Index;
